@@ -8,16 +8,16 @@ script:
     - docker run -e CI=true tejozarkar/react-test npm test -- --coverage
 
 after_success:
-    - docker build -t tejozarkar/multi-client ./client
     - docker build -t tejozarkar/multi-nginx ./nginx
     - docker build -t tejozarkar/multi-server ./server
     - docker build -t tejozarkar/multi-worker ./worker
+    - docker build -t tejozarkar/multi-client ./client
 
     # Login to docker
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
     #Push images to docker hub
-    - docker push tejozarkar/multi-client
     - docker push tejozarkar/multi-nginx
     - docker push tejozarkar/multi-server
     - docker push tejozarkar/multi-worker
+    - docker push tejozarkar/multi-client
